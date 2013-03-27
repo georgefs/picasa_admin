@@ -30,4 +30,7 @@ Settings
 
 
 
-
+Change Log
+-------
+0.0.2
+fix start time too long

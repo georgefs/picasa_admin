@@ -4,30 +4,8 @@ from django.core.files import File
 import os
 import cStringIO, urllib2, Image
 from django.core.files.temp import NamedTemporaryFile
-from django_ztask.decorators import task
-import time
-from .picasa_storage import PicasaStorage
 
 PICASA_ROOT = settings.PICASA_ROOT
-
-
-ps = PicasaStorage(settings.PICASA_USER, settings.PICASA_PASSWORD)
-@task()
-def send_picasa(pk):
-    '''
-        send photo to picasa server
-    '''
-    photo = Photo.objects.get(pk=pk)
-    photo_path = photo.img.name
-    picasa_photo = ps.insert_photo(photo_path)
-    photo.album_id = picasa_photo.albumid.text
-    photo.photo_id = picasa_photo.gphoto_id.text
-    photo.url = picasa_photo.content.src
-
-    photo.save()
-
-
-# Create your models here.
 
 
 class Photo( models.Model ): 
@@ -48,7 +26,8 @@ class Photo( models.Model ):
         super(Photo, self).save()
 
         if not self.in_picasa():
-            send_picasa.async(self.pk)
+            from .sender import save_to_picasa_server
+            save_to_picasa_server.async(self.pk)
 
     def format_data(self):
         '''
