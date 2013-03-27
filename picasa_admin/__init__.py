@@ -13,9 +13,3 @@ __license__ = "BSD (3 clause)"
 
 
 
-
-PICASA_ROOT = os.path.join(settings.MEDIA_ROOT, "picasa_storage" )
-PICASA_TMP = os.path.join(PICASA_ROOT, 'tmp')
-
-settings.PICASA_ROOT = PICASA_ROOT
-settings.PICASA_TMP = PICASA_TMP

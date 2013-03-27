@@ -9,7 +9,6 @@ import time
 from .picasa_storage import PicasaStorage
 
 PICASA_ROOT = settings.PICASA_ROOT
-PICASA_TMP = settings.PICASA_TMP
 
 
 ps = PicasaStorage(settings.PICASA_USER, settings.PICASA_PASSWORD)

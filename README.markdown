@@ -26,7 +26,7 @@ Settings
     PICASA_USER = picasa account
     PICASA_PASSWORD = picasa password
 
-
+    PICASA_ROOT = picasa img temporary dir
 
 
 
