@@ -40,6 +40,7 @@ class Photo( models.Model ):
         except Exception, e:
             print e
             
+            #create a tempfile because the django filefield most be a named file can't use StringIO
             img_temp = NamedTemporaryFile(delete=True)
             img_temp.write(urllib2.urlopen(self.url).read())
             img_temp.flush()
