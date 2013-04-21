@@ -4,6 +4,7 @@ from django.core.files import File
 import os
 import cStringIO, urllib2, Image
 from django.core.files.temp import NamedTemporaryFile
+import re
 
 PICASA_ROOT = settings.PICASA_ROOT
 
@@ -52,6 +53,16 @@ class Photo( models.Model ):
 
 
     def in_picasa(self):
-        return self.album_id and self.photo_id
 
-
+        if self.album_id and self.photo_id:
+            return True
+        else re.search('https?://lh\d\.(ggpht|googleusercontent)\.com', self.url):
+            try:
+                data = cStringIO.StringIO(urllib2.urlopen(self.url).read())
+                Image(data)
+                self.album_id="out"
+                self.photo_id="out"
+            except Exception, e:
+                return False
+            else:
+                return True
