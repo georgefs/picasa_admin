@@ -5,6 +5,7 @@ import os
 import cStringIO, urllib2, Image
 from django.core.files.temp import NamedTemporaryFile
 import re
+from utils import *
 
 PICASA_ROOT = settings.PICASA_ROOT
 
@@ -21,12 +22,12 @@ class Photo( models.Model ):
 
     def save(self):
 
-        if not self.in_picasa():
+        if not self.success():
             self.format_data()
 
         super(Photo, self).save()
 
-        if not self.in_picasa():
+        if not self.success():
             from .sender import save_to_picasa_server
             save_to_picasa_server.async(self.pk)
 
@@ -52,11 +53,11 @@ class Photo( models.Model ):
             self.url = ""
 
 
-    def in_picasa(self):
+    def success(self):
 
         if self.album_id and self.photo_id:
             return True
-        else re.search('https?://lh\d\.(ggpht|googleusercontent)\.com', self.url):
+        elif in_picasa(self.url):
             try:
                 data = cStringIO.StringIO(urllib2.urlopen(self.url).read())
                 Image(data)
