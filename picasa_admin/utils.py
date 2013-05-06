@@ -28,7 +28,6 @@ def reset_pisca_storage():
 def send_photo(photo, count=0):
     try:
         print photo
-        Image.open(photo)
         ps = get_picasa_storage()
         print 'send'
         result= ps.insert_photo(photo)

@@ -122,6 +122,8 @@ class PicasaStorage:
 
             album_url = "'/data/feed/api/user/{}/albumid/{}'".format(self.username, self.current_album.gphoto_id.text)
             photo = self._.InsertPhotoSimple(self.current_album, title, summary, filename,  content_type)
+        except IOError, e:
+            raise e
 
         except Exception, e:
             self.insert_photo(filename, title, summary, content_type)
