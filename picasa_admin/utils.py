@@ -10,7 +10,7 @@ from .picasa_storage import PicasaStorage
 from django.conf import settings
 
 def in_picasa(url):
-    return re.search('https?://lh\d\.(ggpht|googleusercontent)\.com/.*\d+x\d+(.jpg)?$', url)
+    return re.search('https?://lh\d\.(ggpht|googleusercontent)\.com/.*\d+x\d+(\.\w+)?$', url)
 
 picasa_storage = None
 def get_picasa_storage():
